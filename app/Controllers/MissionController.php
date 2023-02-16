@@ -9,6 +9,10 @@ namespace App\Controllers;
         }
         public function show(int $id)
         {
+           $req=$this->db->getPDO()->query('SELECT * FROM spies.missions');
+           $missions = $req->fetchAll();
+           var_dump($missions);
+
             return $this->view('mission.show', compact('id'));
         }
     }
