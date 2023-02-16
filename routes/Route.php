@@ -36,7 +36,7 @@ class Route
        $controller = new $params[0]();
        $method = $params[1];
 
-       isset($this->matches[1]) ? $controller->$method($this->matches[1]) :
+       return isset($this->matches[1]) ? $controller->$method($this->matches[1]) :
            $controller->$method();
     }
 }

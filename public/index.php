@@ -10,10 +10,13 @@ $whoops = new Run;
 $whoops->pushHandler(new PrettyPageHandler);
 $whoops->register();
 
+define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR);
+define('SCRIPTS', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
+
 
 $router = new Router($_GET['url']);
 
-$router->get('/', 'App\Controllers\MissionsController@index');
-$router->get('/mission/:id', 'App\Controllers\MissionsController@show');
+$router->get('/', 'App\Controllers\MissionController@index');
+$router->get('/mission/:id', 'App\Controllers\MissionController@show');
 
 $router->run();
