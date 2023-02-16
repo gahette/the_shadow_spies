@@ -1,2 +1,19 @@
 {
+    "name": "jbm/the_shadow_spies",
+    "description": "entrainement Studi gestion  \"gestion des données du KGB\"",
+    "authors": [
+        {
+            "name": "gahette"
+        }
+    ],
+     "autoload": {
+        "psr-4": {
+            "Router\\": "routes/",
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "filp/whoops": "^2.14",
+        "symfony/var-dumper": "^5.4"
+    }
 }
