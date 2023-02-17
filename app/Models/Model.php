@@ -25,7 +25,7 @@ protected $order;
      return $stmt->fetchAll();
  }
 
- public function findById(int $id)
+ public function findById(int $id): Model
  {
      $stmt = $this->db->getPDO()->prepare("SELECT * FROM missions WHERE id = ?");
      $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this),[$this->db]);
