@@ -16,7 +16,8 @@ define('SCRIPTS', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 
 $router = new Router($_GET['url']);
 
-$router->get('/', 'App\Controllers\MissionController@index');
-$router->get('/mission/:id', 'App\Controllers\MissionController@show');
+$router->get('/', 'App\Controllers\MissionController@welcome');
+$router->get('/missions', 'App\Controllers\MissionController@index');
+$router->get('/missions/:id', 'App\Controllers\MissionController@show');
 
 $router->run();

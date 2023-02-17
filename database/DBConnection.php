@@ -6,18 +6,12 @@ use PDO;
 
 class DBConnection
 {
-    private $dbname;
-    private $host;
-    private $username;
-    private $password;
-    private $pdo;
+    private string $dbname;
+    private string $host;
+    private string $username;
+    private string $password;
+    private PDO $pdo;
 
-    /**
-     * @param $dbname
-     * @param $host
-     * @param $username
-     * @param $password
-     */
     public function __construct($dbname, $host, $username, $password)
     {
         $this->dbname = $dbname;
@@ -28,7 +22,7 @@ class DBConnection
 
     public function getPDO(): PDO
     {
-        return $this->pdo ?? $this->pdo = new PDO("mysql:dbname={$this->dbname};host={$this->host}",
+        return $this->pdo ?? $this->pdo = new PDO("mysql:dbname=$this->dbname;host=$this->host",
             $this->username, $this->password, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
