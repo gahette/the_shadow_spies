@@ -20,14 +20,24 @@ $db->getPDO()->exec('SET FOREIGN_KEY_CHECKS = 0');
 //$db->getPDO()->exec('TRUNCATE TABLE types_hideouts');
 //$db->getPDO()->exec('TRUNCATE TABLE types_missions');
 $db->getPDO()->exec('TRUNCATE TABLE missions');
+$db->getPDO()->exec('TRUNCATE TABLE country_mission');
 $db->getPDO()->exec('SET FOREIGN_KEY_CHECKS = 1');
 
 
+$missions = [];
+
 for ($i = 0; $i < 30; $i++) {
     $db->getPDO()->exec("INSERT INTO missions SET 
-                         title = '$faker->word',
-                         description = '$faker->paragraph',
+                         title = '$faker->word, $faker->word',
+                         description = '$faker->paragraph(3)',
                          nickname = '$faker->userName',
                          created_at = '$faker->date',
                          closed_at = '$faker->date' ");
+    $missions[] = $db->getPDO()->lastInsertId();
+}
+foreach ($missions as $mission) {
+    $randomMissions = $faker->randomElements($missions, rand(0, count($missions)));
+    foreach ($randomMissions as $randomMission) {
+        $db->getPDO()->exec("INSERT INTO country_mission SET mission_id=$mission, country_id=$randomMission");
+    }
 }

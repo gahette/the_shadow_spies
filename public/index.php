@@ -7,6 +7,8 @@ use Whoops\Run;
 require '../vendor/autoload.php';
 require '../connect.php';
 
+define('DEBUG_TIME', microtime(true)); //constante temps actuelle
+
 $whoops = new Run;
 $whoops->pushHandler(new PrettyPageHandler);
 $whoops->register();

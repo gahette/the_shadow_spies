@@ -84,4 +84,13 @@ class Mission extends Model
 
         return nl2br(e(Text::excerpt($this->description, 60)));
     }
+
+    public function getCountries()
+    {
+        return $this->query("
+        SELECT c.* FROM countries c
+        INNER  JOIN country_mission cm on c.id = cm.country_id
+        INNER JOIN missions m on cm.mission_id = m.id
+        WHERE m.id = ?", $this->id);
+    }
 }
