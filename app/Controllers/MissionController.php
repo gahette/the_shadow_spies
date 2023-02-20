@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Country;
 use App\Models\Mission;
 
 class MissionController extends Controller
@@ -15,7 +16,7 @@ class MissionController extends Controller
     public function index()
     {
         $mission = new Mission($this->getDB());
-        $missions = $mission->all();
+        $missions = $mission->all("created_at DESC");
 
         return $this->view('mission.index', compact('missions'));
 
@@ -27,5 +28,12 @@ class MissionController extends Controller
         $mission = $mission->findById($id);
 
         return $this->view('mission.show', compact('mission'));
+    }
+
+    public function country(int $id)
+    {
+        $country = (new Country($this->getDB()))->findById($id);
+
+        return $this->view('mission.country', compact('country'));
     }
 }

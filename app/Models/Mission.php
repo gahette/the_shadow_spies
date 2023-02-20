@@ -6,18 +6,17 @@ use App\Helpers\Text;
 use DateTime;
 use Exception;
 
+
 class Mission extends Model
 {
     protected $table = 'missions';
-    protected $order = 'created_at';
-
 
     private int $id;
     private string $title;
-    private $created_at;
+    private string $created_at;
     private string $description;
     private string $nickname;
-    private $closed_at;
+    private string $closed_at;
 
     /**
      * @return int
@@ -38,12 +37,12 @@ class Mission extends Model
 
 
     /**
-     * @return DateTime
+     * @return string
      * @throws Exception
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): string
     {
-        return new DateTime($this->created_at);
+        return (new DateTime($this->created_at))->format('d/m/Y à h:m');
     }
 
     /**
@@ -58,19 +57,19 @@ class Mission extends Model
     /**
      * @return string
      */
-    public function getNickname()
+    public function getNickname(): string
     {
         return $this->nickname;
     }
 
 
     /**
-     * @return DateTime
+     * @return string
      * @throws Exception
      */
-    public function getClosedAt(): DateTime
+    public function getClosedAt(): string
     {
-        return new DateTime($this->closed_at);
+        return (new DateTime($this->closed_at))->format('d/m/Y à h:m');
     }
 
     /**
@@ -85,12 +84,15 @@ class Mission extends Model
         return nl2br(e(Text::excerpt($this->description, 60)));
     }
 
+    /**
+     * @return mixed
+     */
     public function getCountries()
     {
         return $this->query("
         SELECT c.* FROM countries c
         INNER  JOIN country_mission cm on c.id = cm.country_id
-        INNER JOIN missions m on cm.mission_id = m.id
-        WHERE m.id = ?", $this->id);
+        WHERE cm.mission_id = ?
+        ", $this->id);
     }
 }

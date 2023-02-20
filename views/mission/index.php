@@ -2,9 +2,7 @@
 
 
 <div class="row">
-    <?php
-
-    foreach ($params['missions'] as $mission): ?>
+    <?php foreach ($params['missions'] as $mission): ?>
 
         <div class="col-md-4">
             <div class="card mb-3">
@@ -13,22 +11,25 @@
                     <h4 class="card-title">Mission : <br><?= e($mission->getTitle()) ?></h4>
                     <div>
                         <?php foreach ($mission->getCountries() as $country): ?>
-                            <p><span class="badge bg-info"><?= $country->name ?></span></p>
+                            <p><span class="badge bg-success">
+                                    <a href="/the_shadow_spies/countries/<?= $country->getId() ?>"
+                                       class="text-white"><?= e($country->name) ?></a></span>
+                            </p>
                         <?php endforeach; ?>
                     </div>
-                    <p class="badge bg-info"><small>Créé le <?= $mission->getCreatedAt()->format('d/m/Y h:m') ?></small>
+                    <p class="badge bg-info"><small>Créé le <?= e($mission->getCreatedAt()) ?></small>
                     </p>
                     <p class="card-text">Extrait : <br><?= $mission->getExcerpt() ?></p>
                     <h5>Nom de code : <br><?= e($mission->getNickname()) ?></h5>
                     <div class="card-footer">
-                        <p class="text-muted"><small>Cloturé
-                                le <?= $mission->getClosedAt()->format('d/m/Y h:m') ?></small>
+                        <p class="text-muted"><small>Fin de la mission prévu le
+                                le <?= e($mission->getClosedAt()) ?></small>
                         </p>
                     </div>
 
                     <p>
                         <a href="/the_shadow_spies/missions/<?= $mission->getId() ?>"
-                           class="btn btn-primary">Lire plus</a>
+                           class="btn btn-primary">Voir détails</a>
                     </p>
                 </div>
             </div>

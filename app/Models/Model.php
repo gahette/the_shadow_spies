@@ -18,9 +18,14 @@ abstract class Model
         $this->db = $db;
     }
 
-    public function all(): array
+    public function all(?string $order= ""): array
     {
-        return $this->query("SELECT * FROM $this->table ORDER BY $this->order DESC");
+        $sql = "SELECT * FROM {$this->table}";
+        if($order){
+            $sql .= " ORDER BY " . $order;
+        }
+
+        return $this->query($sql);
     }
 
     public function findById(int $id): Model
@@ -41,6 +46,5 @@ abstract class Model
             $stmt->execute([$param]);
             return $stmt->$fetch();
         }
-
     }
 }

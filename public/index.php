@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\NotFoundException;
 use Router\Router;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
@@ -21,5 +22,10 @@ $router = new Router($_GET['url']);
 $router->get('/', 'App\Controllers\MissionController@welcome');
 $router->get('/missions', 'App\Controllers\MissionController@index');
 $router->get('/missions/:id', 'App\Controllers\MissionController@show');
+$router->get('/countries/:id','App\Controllers\MissionController@country');
 
-$router->run();
+try {
+    $router->run();
+} catch (NotFoundException $e) {
+    return $e->error404();
+}
