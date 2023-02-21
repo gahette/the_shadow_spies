@@ -42,7 +42,7 @@ class Mission extends Model
      */
     public function getCreatedAt(): string
     {
-        return (new DateTime($this->created_at))->format('d/m/Y à h:m');
+        return (new DateTime($this->created_at))->format('d/m/Y à h:i');
     }
 
     /**
@@ -69,7 +69,7 @@ class Mission extends Model
      */
     public function getClosedAt(): string
     {
-        return (new DateTime($this->closed_at))->format('d/m/Y à h:m');
+        return (new DateTime($this->closed_at))->format('d/m/Y à h:i');
     }
 
     /**
@@ -93,6 +93,6 @@ class Mission extends Model
         SELECT c.* FROM countries c
         INNER  JOIN country_mission cm on c.id = cm.country_id
         WHERE cm.mission_id = ?
-        ", $this->id);
+        ", [$this->id]);
     }
 }

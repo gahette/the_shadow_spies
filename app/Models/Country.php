@@ -49,6 +49,6 @@ class Country extends Model
     SELECT m.* FROM missions m 
     INNER JOIN country_mission cm on m.id = cm.mission_id
     WHERE cm.country_id = ?
-    ", $this->id);
+    ", [$this->id]);
     }
 }
