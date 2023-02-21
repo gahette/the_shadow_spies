@@ -91,8 +91,26 @@ class Mission extends Model
     {
         return $this->query("
         SELECT c.* FROM countries c
-        INNER  JOIN country_mission cm on c.id = cm.country_id
+        JOIN country_mission cm on c.id = cm.country_id
         WHERE cm.mission_id = ?
         ", [$this->id]);
+    }
+
+    public function update(int $id, array $data, ?array $relations = null)
+    {
+        parent::update($id, $data);
+
+        $stmt = $this->db->getPDO()->prepare("DELETE FROM country_mission WHERE mission_id = ?");
+        $result = $stmt->execute([$id]);
+
+        foreach ($relations as $countryId) {
+            $stmt = $this->db->getPDO()->prepare("INSERT country_mission(mission_id, country_id) VALUE (?, ?)");
+            $stmt->execute([$id, $countryId]);
+        }
+
+        if ($result) {
+            return true;
+        }
+
     }
 }

@@ -9,6 +9,7 @@
         <th scope="col">nom de code</th>
         <th scope="col">publié le</th>
         <th scope="col">fin prévu le</th>
+        <th scope="col">Pays</th>
         <th scope="col">Actions</th>
 
     </tr>
@@ -22,6 +23,16 @@
             <td><?= e($mission->getNickname()) ?></td>
             <td><?= e($mission->getCreatedAt()) ?></td>
             <td><?= e($mission->getClosedAt()) ?></td>
+            <td>
+                <?php foreach ($mission->getCountries() as $k => $country):
+                    if ($k > 0):
+                        echo ', ';
+                    endif;
+                    ?>
+                    <?= ucfirst(strtolower(e($country->name))) ?>
+                <?php endforeach; ?>
+            </td>
+
             <td>
                 <a href="/the_shadow_spies/admin/missions/edit/<?= $mission->getId() ?>" class="btn btn-warning">Modifier</a>
                 <form action="/the_shadow_spies/admin/missions/delete/<?= $mission->getId() ?>" method="post"

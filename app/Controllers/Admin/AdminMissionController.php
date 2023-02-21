@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Controller;
+use App\Models\Country;
 use App\Models\Mission;
 
 class AdminMissionController extends Controller
@@ -17,14 +18,17 @@ class AdminMissionController extends Controller
     public function edit(int $id)
     {
         $mission = (new Mission($this->getDB()))->findById($id);
+        $countries = (new Country($this->getDB()))->all();
 
-        return $this->view('admin.mission.edit', compact('mission'));
+        return $this->view('admin.mission.edit', compact('mission', 'countries'));
     }
 
     public function update(int $id)
     {
         $mission = new Mission($this->getDB());
-       $result =  $mission->update($id, $_POST);
+
+        $countries = array_pop($_POST);
+       $result =  $mission->update($id, $_POST, $countries);
 
         if ($result) {
             return header('Location: /the_shadow_spies/admin/missions');
