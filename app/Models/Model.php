@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\DBConnection;
 use PDO;
 
 abstract class Model
 {
-    protected $db;
+    protected DBConnection $db;
     protected $table;
-    protected $order;
+    protected ?string $order;
 
     /**
      * @param $db
@@ -20,7 +21,7 @@ abstract class Model
 
     public function all(?string $order = ""): array
     {
-        $sql = "SELECT * FROM {$this->table}";
+        $sql = "SELECT * FROM $this->table";
         if ($order) {
             $sql .= " ORDER BY " . $order;
         }
@@ -33,14 +34,30 @@ abstract class Model
         return $this->query("SELECT * FROM $this->table WHERE id = ?", [$id], true);
     }
 
+    public function create(array $data, ?array $relations = null)
+    {
+        $firstParenthesis = "";
+        $secondParenthesis = "";
+        $i = 1;
+
+        foreach ($data as $key => $value) {
+            $comma = $i === count($data) ? "" : ', '; //ajout virgule tant qu'il y a un champs
+            $firstParenthesis .= "$key$comma";
+            $secondParenthesis .= ":$key$comma";
+            $i++;
+        }
+        return $this->query("INSERT INTO $this->table ($firstParenthesis) 
+    VALUE ($secondParenthesis)",$data);
+    }
+
     public function update(int $id, array $data, ?array $relations = null)
     {
         $sqlRequestPart = "";
         $i = 1;
 
         foreach ($data as $key => $value) {
-            $comma = $i === count($data) ? " " : ', '; //ajout virgule tant qu'il y a un champs
-            $sqlRequestPart .= "{$key} = :{$key}{$comma}";
+            $comma = $i === count($data) ? "" : ', '; //ajout virgule tant qu'il y a un champs
+            $sqlRequestPart .= "$key = :$key$comma";
             $i++;
         }
 
@@ -70,11 +87,9 @@ abstract class Model
         $stmt = $this->db->getPDO()->$method($sql);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this), [$this->db]);
 
-        if ($method === 'query') {
-            return $stmt->$fetch();
-        } else {
+        if ($method !== 'query') {
             $stmt->execute($param);
-            return $stmt->$fetch();
         }
+        return $stmt->$fetch();
     }
 }

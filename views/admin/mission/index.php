@@ -1,5 +1,7 @@
 <h1>Administration des missions</h1>
 
+<a href="/the_shadow_spies/admin/missions/create" class="btn btn-success my-3">Créer une nouvelle mission</a>
+
 <table class="table">
     <thead>
     <tr>
@@ -21,8 +23,8 @@
             <td><?= e($mission->getTitle()) ?></td>
             <td><?= $mission->getExcerpt() ?></td>
             <td><?= e($mission->getNickname()) ?></td>
-            <td><?= e($mission->getCreatedAt()) ?></td>
-            <td><?= e($mission->getClosedAt()) ?></td>
+            <td><?= $mission->getCreatedAt()->format('d/m/Y H:i') ?></td>
+            <td><?= $mission->getClosedAt()->format('d/m/Y H:i') ?></td>
             <td>
                 <?php foreach ($mission->getCountries() as $k => $country):
                     if ($k > 0):

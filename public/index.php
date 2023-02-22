@@ -25,6 +25,8 @@ $router->get('/missions/:id', 'App\Controllers\MissionController@show');
 $router->get('/countries/:id','App\Controllers\MissionController@country');
 
 $router->get('/admin/missions', 'App\Controllers\Admin\AdminMissionController@index');
+$router->get('/admin/missions/create', 'App\Controllers\Admin\AdminMissionController@create');
+$router->post('/admin/missions/create', 'App\Controllers\Admin\AdminMissionController@createMission');
 $router->post('/admin/missions/delete/:id', 'App\Controllers\Admin\AdminMissionController@destroy');
 $router->get('/admin/missions/edit/:id', 'App\Controllers\Admin\AdminMissionController@edit');
 $router->post('/admin/missions/edit/:id', 'App\Controllers\Admin\AdminMissionController@update');

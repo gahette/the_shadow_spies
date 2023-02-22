@@ -12,7 +12,7 @@
     <body class="d-flex flex-column h-100">
         <div class="container-fluid">
             <div class="row flex-nowrap">
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="#"
                            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -96,7 +96,7 @@
                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
                                      class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">loser</span>
+                                <span class="d-none d-sm-inline mx-1">Admin</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                                 <li><a class="dropdown-item" href="/the_shadow_spies/admin/missions">Administration des missions</a></li>

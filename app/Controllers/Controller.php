@@ -27,7 +27,7 @@ abstract class Controller
         require VIEWS . 'layout.php';
     }
 
-    protected function getDB()
+    protected function getDB(): DBConnection
     {
         return $this->db;
     }

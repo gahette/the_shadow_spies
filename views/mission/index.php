@@ -17,13 +17,13 @@
                             </p>
                         <?php endforeach; ?>
                     </div>
-                    <p class="badge bg-info"><small>Créé le <?= e($mission->getCreatedAt()) ?></small>
+                    <p class="badge bg-info"><small>Créé le <?= $mission->getCreatedAt()->format('d/m/Y H:i') ?></small>
                     </p>
                     <p class="card-text">Extrait : <br><?= $mission->getExcerpt() ?></p>
                     <h5>Nom de code : <br><?= e($mission->getNickname()) ?></h5>
                     <div class="card-footer">
                         <p class="text-muted"><small>Fin de la mission prévu le
-                                le <?= e($mission->getClosedAt()) ?></small>
+                                le <?= $mission->getClosedAt()->format('d/m/Y H:i') ?></small>
                         </p>
                     </div>
 

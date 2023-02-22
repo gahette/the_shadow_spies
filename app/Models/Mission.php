@@ -9,14 +9,35 @@ use Exception;
 
 class Mission extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'missions';
 
+    /**
+     * @var int
+     */
     private int $id;
+    /**
+     * @var string
+     */
     private string $title;
-    private string $created_at;
+    /**
+     * @var string|null
+     */
+    private ?string $created_at;
+    /**
+     * @var string
+     */
     private string $description;
+    /**
+     * @var string
+     */
     private string $nickname;
-    private string $closed_at;
+    /**
+     * @var string|null
+     */
+    private  ?string $closed_at;
 
     /**
      * @return int
@@ -37,12 +58,11 @@ class Mission extends Model
 
 
     /**
-     * @return string
      * @throws Exception
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): DateTime
     {
-        return (new DateTime($this->created_at))->format('d/m/Y à h:i');
+        return (new DateTime($this->created_at));
     }
 
     /**
@@ -64,12 +84,12 @@ class Mission extends Model
 
 
     /**
-     * @return string
+
      * @throws Exception
      */
-    public function getClosedAt(): string
+    public function getClosedAt(): DateTime
     {
-        return (new DateTime($this->closed_at))->format('d/m/Y à h:i');
+        return new DateTime($this->closed_at);
     }
 
     /**
@@ -77,9 +97,6 @@ class Mission extends Model
      */
     public function getExcerpt(): ?string
     {
-        if ($this->description === null) {
-            return null;
-        }
 
         return nl2br(e(Text::excerpt($this->description, 60)));
     }
@@ -96,6 +113,30 @@ class Mission extends Model
         ", [$this->id]);
     }
 
+    /**
+     * @param array $data
+     * @param array|null $relations
+     * @return bool
+     */
+    public function create(array $data, ?array $relations = null): bool
+    {
+        parent::create($data);
+
+        $id = $this->db->getPDO()->lastInsertId();
+
+        foreach ($relations as $countryId) {
+            $stmt = $this->db->getPDO()->prepare("INSERT country_mission(mission_id, country_id) VALUE (?, ?)");
+            $stmt->execute([$id, $countryId]);
+        }
+        return true;
+    }
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @param array|null $relations
+     * @return true|void
+     */
     public function update(int $id, array $data, ?array $relations = null)
     {
         parent::update($id, $data);

@@ -10,9 +10,29 @@ class AdminMissionController extends Controller
 {
     public function index()
     {
-        $missions = (new Mission($this->getDB()))->all();
+        $missions = (new Mission($this->getDB()))->all("created_at DESC");
 
         return $this->view('admin.mission.index', compact('missions'));
+    }
+
+    public function create()
+    {
+        $countries = (new Country($this->getDB()))->all();
+
+        return $this->view('admin.mission.form', compact('countries'));
+    }
+
+    public function createMission()
+    {
+        $mission = new Mission($this->getDB());
+
+        $countries = array_pop($_POST);
+        $result = $mission->create($_POST, $countries);
+
+        if ($result) {
+            return header('Location: /the_shadow_spies/admin/missions');
+        }
+        return $this;
     }
 
     public function edit(int $id)
@@ -20,7 +40,7 @@ class AdminMissionController extends Controller
         $mission = (new Mission($this->getDB()))->findById($id);
         $countries = (new Country($this->getDB()))->all();
 
-        return $this->view('admin.mission.edit', compact('mission', 'countries'));
+        return $this->view('admin.mission.form', compact('mission', 'countries'));
     }
 
     public function update(int $id)
@@ -28,12 +48,14 @@ class AdminMissionController extends Controller
         $mission = new Mission($this->getDB());
 
         $countries = array_pop($_POST);
-       $result =  $mission->update($id, $_POST, $countries);
+        $result = $mission->update($id, $_POST, $countries);
 
         if ($result) {
             return header('Location: /the_shadow_spies/admin/missions');
         }
+        return $this;
     }
+
     public function destroy(int $id)
     {
         $mission = new Mission($this->getDB());
@@ -42,5 +64,6 @@ class AdminMissionController extends Controller
         if ($result) {
             return header('Location: /the_shadow_spies/admin/missions');
         }
+        return $this;
     }
 }
