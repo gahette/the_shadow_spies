@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+/**
+ * @property $password
+ * @property $admin
+ */
 class User extends Model
 {
     protected $table = 'users';
@@ -9,8 +13,6 @@ class User extends Model
 
     public function getByUsername(string $username): User
     {
-        return $this->query("SELECT * FROM $this->table WHERE lastname = ?", [$username], true);
-
- 
+        return $this->query("SELECT * FROM $this->table WHERE $this->table.lastname = ?", [$username], true);
     }
 }

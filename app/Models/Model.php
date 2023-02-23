@@ -31,7 +31,7 @@ abstract class Model
 
     public function findById(int $id): Model
     {
-        return $this->query("SELECT * FROM $this->table WHERE id = ?", [$id], true);
+        return $this->query("SELECT * FROM $this->table WHERE $this->table.id = ?", [$id], true);
     }
 
     public function create(array $data, ?array $relations = null)
@@ -63,12 +63,12 @@ abstract class Model
 
         $data['id'] = $id;
 
-        return $this->query("UPDATE $this->table SET $sqlRequestPart WHERE id = :id", $data);
+        return $this->query("UPDATE $this->table SET $sqlRequestPart WHERE $this->table.id = :id", $data);
     }
 
     public function destroy(int $id): bool
     {
-        return $this->query("DELETE FROM $this->table WHERE id = ?", [$id]);
+        return $this->query("DELETE FROM $this->table WHERE $this->table.id = ?", [$id]);
     }
 
     public function query(string $sql, array $param = null, bool $single = null)

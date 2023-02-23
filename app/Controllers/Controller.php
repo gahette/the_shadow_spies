@@ -17,7 +17,6 @@ abstract class Controller
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
         $this->db = $db;
     }
 
@@ -41,7 +40,8 @@ abstract class Controller
         if (isset($_SESSION['auth']) && $_SESSION['auth'] === 1) {
             return true;
         } else {
-            return header('Location: /the_shadow_spies/login');
+            header('Location: /the_shadow_spies/login');
+            exit;
         }
     }
 }

@@ -1,3 +1,5 @@
+<?php $title = "missions"; ?>
+
 <h1>Les Missions</h1>
 
 
