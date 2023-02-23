@@ -36,8 +36,11 @@ for ($i = 0; $i < 30; $i++) {
     $missions[] = $db->getPDO()->lastInsertId();
 }
 foreach ($missions as $mission) {
-    $randomMissions = $faker->randomElements($missions, rand(0, count($missions)));
+    $randomMissions = $faker->randomElements($missions, rand(1, 2));
     foreach ($randomMissions as $randomMission) {
         $db->getPDO()->exec("INSERT INTO country_mission SET mission_id=$mission, country_id=$randomMission");
     }
 }
+
+$password = password_hash('admin', PASSWORD_BCRYPT);
+$db->getPDO()->exec("INSERT INTO users SET lastname='Doe', firstname='John', email='john@doe.com', password='$password', created_at='$faker->date'");

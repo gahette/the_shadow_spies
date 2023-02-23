@@ -1,5 +1,9 @@
 <h1>Administration des missions</h1>
 
+<?php if (isset($_GET['success'])): ?>
+<div class="alert alert-success">Vous êtes connecté !</div>
+<?php endif; ?>
+
 <a href="/the_shadow_spies/admin/missions/create" class="btn btn-success my-3">Créer une nouvelle mission</a>
 
 <table class="table">

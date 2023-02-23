@@ -15,6 +15,7 @@ class MissionController extends Controller
 
     public function index()
     {
+       
         $mission = new Mission($this->getDB());
         $missions = $mission->all("created_at DESC");
 
@@ -24,6 +25,7 @@ class MissionController extends Controller
 
     public function show(int $id)
     {
+
         $mission = new Mission($this->getDB());
         $mission = $mission->findById($id);
 
@@ -32,6 +34,7 @@ class MissionController extends Controller
 
     public function country(int $id)
     {
+
         $country = (new Country($this->getDB()))->findById($id);
 
         return $this->view('mission.country', compact('country'));

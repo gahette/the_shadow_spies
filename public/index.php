@@ -24,6 +24,10 @@ $router->get('/missions', 'App\Controllers\MissionController@index');
 $router->get('/missions/:id', 'App\Controllers\MissionController@show');
 $router->get('/countries/:id','App\Controllers\MissionController@country');
 
+$router->get('login', 'App\Controllers\UserController@login');
+$router->post('login', 'App\Controllers\UserController@loginPost');
+$router->get('logout', 'App\Controllers\UserController@logout');
+
 $router->get('/admin/missions', 'App\Controllers\Admin\AdminMissionController@index');
 $router->get('/admin/missions/create', 'App\Controllers\Admin\AdminMissionController@create');
 $router->post('/admin/missions/create', 'App\Controllers\Admin\AdminMissionController@createMission');
